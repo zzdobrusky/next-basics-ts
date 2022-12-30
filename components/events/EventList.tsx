@@ -19,11 +19,9 @@ type EventListProps = {
 const EventList: FunctionComponent<EventListProps> = ({ items }) => {
   return (
     <ul className={styles.list}>
-      {items && items.length > 0 ? (
-        items.map((item) => <EventItem key={item.id} {...item} />)
-      ) : (
-        <p className="center">No events found</p>
-      )}
+      {items.map((item) => (
+        <EventItem key={item.id} {...item} />
+      ))}
     </ul>
   );
 };

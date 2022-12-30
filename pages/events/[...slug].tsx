@@ -5,6 +5,8 @@ import { getFilteredEvents } from "../../dummy-data";
 
 import EventList from "../../components/events/EventList";
 import ResultsTitle from "../../components/events/ResultsTitle";
+import Button from "../../components/ui/Button";
+import ErrorAlert from "../../components/ui/ErrorAlert";
 
 type FilteredEventslPageProps = {};
 
@@ -31,13 +33,23 @@ const FilteredEventslPage: FunctionComponent<
     numMonth > 12
   ) {
     return (
-      <>
-        <p className="center">Invalid filter. Please adjust your values!</p>;
-      </>
+      <div className="center">
+        <ErrorAlert><p>Invalid filter. Please adjust your values!</p></ErrorAlert>
+        <Button link="/events">Show All Events</Button>
+      </div>
     );
   }
 
   const filteredEvents = getFilteredEvents({ year: numYear, month: numMonth });
+
+  if (!filteredEvents || filteredEvents.length === 0) {
+    return (
+      <div className="center">
+        <ErrorAlert><p>No events found</p></ErrorAlert>
+        <Button link="/events">Show All Events</Button>
+      </div>
+    );
+  }
   const date = new Date(numYear, numMonth - 1);
 
   return (
